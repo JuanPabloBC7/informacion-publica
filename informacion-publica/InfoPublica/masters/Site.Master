@@ -1,0 +1,449 @@
+﻿<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.master.vb" Inherits="InfoPublica.SiteMaster" %>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head runat="server">
+  <!-- ======================================================== -->
+  <!-- * Author:  (8104) - Juan Pablo Balan                     -->
+  <!-- * Versión: 02.09.2022                                    -->
+  <!-- ======================================================== -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%: Page.Title %> - Información Pública</title>
+
+  <asp:PlaceHolder runat="server">
+    <%: Scripts.Render("~/bundles/modernizr") %>
+  </asp:PlaceHolder>
+  <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+  <!-- ===============================================-->
+  <!--    Favicons                                    -->
+  <!-- ===============================================-->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicons/favicon.ico">
+  <link rel="manifest" href="/assets/img/favicons/manifest.json">
+  <meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-150x150.png">
+  <meta name="theme-color" content="#ffffff">
+  <script src="/assets/js/config.js"></script>
+  <script src="/assets/vendors/overlayscrollbars/OverlayScrollbars.min.js"></script>
+
+  <!-- ===============================================-->
+  <!--    Stylesheets                                 -->
+  <!-- ===============================================-->
+  <link href="/assets/vendors/dropzone/dropzone.min.css" rel="stylesheet">
+  <link href="/assets/vendors/choices/choices.min.css" rel="stylesheet">
+  <link href="/assets/vendors/prism/prism-okaidia.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
+  <link href="/assets/vendors/overlayscrollbars/OverlayScrollbars.min.css" rel="stylesheet">
+  <link href="/assets/css/theme-rtl.min.css" rel="stylesheet" id="style_rtl">
+  <link href="/assets/css/theme.min.css" rel="stylesheet" id="style_default">
+  <link href="/assets/css/user-rtl.min.css" rel="stylesheet" id="user_style_rtl">
+  <link href="/assets/css/user.min.css" rel="stylesheet" id="user_style_default">
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="/assets/datatable/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/assets/datatable/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="/assets/datatable/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="/assets/sweetalert2/css/bootstrap-4.min.css">
+  <script>
+    var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+    if (isRTL) {
+      var linkDefault = document.getElementById('style_default');
+      var userLinkDefault = document.getElementById('user_style_default');
+      linkDefault.setAttribute('disabled', true);
+      userLinkDefault.setAttribute('disabled', true);
+      document.querySelector('html').setAttribute('dir', 'rtl');
+    } else {
+      var linkRTL = document.getElementById('style_rtl');
+      var userLinkRTL = document.getElementById('user_style_rtl');
+      linkRTL.setAttribute('disabled', true);
+      userLinkRTL.setAttribute('disabled', true);
+    }
+  </script>
+
+  <asp:ContentPlaceHolder ID="link" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
+  <form runat="server">
+    <asp:ScriptManager runat="server">
+      <Scripts></Scripts>
+    </asp:ScriptManager>
+    <!-- ===============================================-->
+    <!--    Main Content                                -->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+      <div class="container-fluid" data-layout="container">
+        <script>
+          var isFluid = JSON.parse(localStorage.getItem('isFluid'));
+          if (isFluid) {
+            var container = document.querySelector('[data-layout]');
+            container.classList.remove('container');
+            container.classList.add('container-fluid');
+          }
+        </script>
+
+        <!-- ===============================================-->
+        <!--    SideBar                                      -->
+        <!-- ===============================================-->
+        <nav class="navbar navbar-light navbar-vertical navbar-expand-xl navbar-card">
+          <script>
+            var navbarStyle = localStorage.getItem("navbarStyle");
+            if (navbarStyle && navbarStyle !== 'transparent') {
+              document.querySelector('.navbar-vertical').classList.add(`navbar-${navbarStyle}`);
+            }
+          </script>
+          <div class="d-flex align-items-center">
+            <div class="toggle-icon-wrapper">
+              <button class="btn navbar-toggler-humburger-icon navbar-vertical-toggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Menú"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+            </div>
+            <a class="navbar-brand" href="/pages/request/dashboard">
+              <div class="d-flex align-items-center py-3">
+                <span class="font-sans-serif">UIP</span>
+              </div>
+            </a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+            <div class="navbar-vertical-content scrollbar">
+              <ul id="sidebar-nav" class="navbar-nav flex-column mb-3">
+                <li id="lvl1" class="nav-item">
+                  <!-- parent pages-->
+                  <a id="lvl1T" class="nav-link dropdown-indicator" href="#lvl1C" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="lvl1C">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-icon">
+                        <span class="fas fa-folder-open" style="color: #d79a13 !important;"></span>
+                      </span>
+                      <span class="nav-link-text ps-1">Solicitudes</span>
+                    </div>
+                  </a>
+                  <ul id="lvl1C" class="nav collapse">
+                    <li id="lvl1_0" class="nav-item">
+                      <a id="lvl1_0T" href="/pages/request/dashboard.aspx" class="nav-link" data-bs-toggle="" aria-expanded="false" runat="server">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Dashboard</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li id="lvl1_1" class="nav-item">
+                      <a id="lvl1_1T" href="/pages/request/manage-request.aspx" class="nav-link" data-bs-toggle="" aria-expanded="false" runat="server">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Administrar Solicitudes</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li id="lvl1_2" class="nav-item">
+                      <a id="lvl1_2T" href="/pages/request/check-request.aspx" class="nav-link" data-bs-toggle="" aria-expanded="false" runat="server">
+                        <div class="d-flex align-items-center">
+                          <span class="nav-link-text">Consultar Solicitudes</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="content">
+          <!-- ===============================================-->
+          <!--    NavBar                                      -->
+          <!-- ===============================================-->
+          <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand">
+
+            <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+            <a class="navbar-brand me-1 me-sm-3" href="/pages/request/dashboard">
+              <div class="d-flex align-items-center">
+                <span class="font-sans-serif">UIP</span>
+              </div>
+            </a>
+            <ul class="navbar-nav align-items-center d-none d-lg-block">
+              <li class="nav-item"></li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-icons ms-auto flex-row align-items-center">
+              <li class="nav-item d-none d-sm-block">
+                <div id="rol" class="px-2" runat="server">
+                  Rol del usuario
+                </div>
+              </li>
+              <li class="nav-item d-none d-sm-block">
+                <div class="px-2 d-flex flex-row align-items-center">
+                  <i class="fas fa-user-alt me-1"></i>
+                  <div id="username" runat="server">Nombre de Usuario</div>
+                </div>
+              </li>
+              <li class="nav-item d-none d-sm-block dropdown">
+                <a class="nav-link px-0 fa-icon-wait" id="navbarDropdownInfo" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                  <span class="fas fa-info-circle text-primary" data-fa-transform="shrink-7" style="font-size: 45px;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Información del Sistema"></span>
+                </a>
+                <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownInfo">
+                  <div class="bg-white dark__bg-1000 rounded-2 py-2">
+                    <a class="dropdown-item fw-bold text-primary" href="#!">
+                      <span class="fas fa-users me-1"></span>
+                      <span>Conectados: </span>
+                      <span id="connections" runat="server">0</span>
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-warning" href="#!">
+                      <span class="fas fa-server me-1"></span>
+                      <span id="server" runat="server">Servidor</span>
+                    </a>
+                    <a class="dropdown-item text-dark" href="#!">
+                      <span class="fas fa-file-alt me-1"></span>
+                      <span id="environment" runat="server">Ambiente</span>
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item fw-bold text-danger" href="#!">
+                      <span class="fas fa-code-branch me-1"></span>
+                      <span>Versión 02.09.2022</span>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item d-none d-sm-block dropdown">
+                <a class="nav-link notification-indicator notification-indicator-primary notification-indicator-fill px-0 fa-icon-wait" id="navbarDropdownNotification" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hide-on-body-scroll="data-hide-on-body-scroll">
+                  <span class="fas fa-bell" data-fa-transform="shrink-6" style="font-size: 33px;"></span>
+                  <span id="numberNotifications" class="notification-indicator-number" runat="server"></span>
+                </a>
+                <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end dropdown-menu-card dropdown-menu-notification dropdown-caret-bg" aria-labelledby="navbarDropdownNotification">
+                  <div class="card card-notification shadow-none">
+                    <div class="card-header">
+                      <div class="row justify-content-between align-items-center">
+                        <div class="col-auto">
+                          <h6 class="card-header-title mb-0">Notifications</h6>
+                        </div>
+                        <div class="col-auto ps-0 ps-sm-3"></div>
+                      </div>
+                    </div>
+                    <div class="scrollbar-overlay" style="max-height: 19rem">
+                      <div class="list-group list-group-flush fw-normal fs--1">
+                        <asp:Literal ID="notifications" runat="server"></asp:Literal>
+                        <%--<div class="list-group-title border-bottom">NUEVAS</div>
+                        <div class="list-group-item">
+                          <a class="notification notification-flush notification-unread" href="#!">
+                            <div class="notification-avatar">
+                              <div class="avatar avatar-2xl me-3">
+                                <img class="rounded-circle" src="/assets/img/team/1-thumb.png" alt="" />
+
+                              </div>
+                            </div>
+                            <div class="notification-body">
+                              <p class="mb-1"><strong>Emma Watson</strong> replied to your comment : "Hello world 😍"</p>
+                              <span class="notification-time"><span class="me-2" role="img" aria-label="Emoji">💬</span>Just now</span>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="list-group-title border-bottom">EARLIER</div>
+                        <div class="list-group-item">
+                          <a class="border-bottom-0 notification notification-flush" href="#!">
+                            <div class="notification-avatar">
+                              <div class="avatar avatar-xl me-3">
+                                <img class="rounded-circle" src="/assets/img/team/10.jpg" alt="" />
+
+                              </div>
+                            </div>
+                            <div class="notification-body">
+                              <p class="mb-1"><strong>James Cameron</strong> invited to join the group: United Nations International Children's Fund</p>
+                              <span class="notification-time"><span class="me-2" role="img" aria-label="Emoji">🙋‍</span>2d</span>
+
+                            </div>
+                          </a>
+
+                        </div>--%>
+                      </div>
+                    </div>
+                    <div class="card-footer text-center border-top"><a class="card-link d-block" href="/pages/request/manage-request">Ver todas</a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item">
+                <div class="theme-control-toggle fa-icon-wait px-2">
+                  <input class="form-check-input ms-0 theme-control-toggle-input" id="themeControlToggle" type="checkbox" data-theme-control="theme" value="dark" />
+                  <label class="mb-0 theme-control-toggle-label theme-control-toggle-light" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Claro"><span class="fas fa-sun fs-0"></span></label>
+                  <label class="mb-0 theme-control-toggle-label theme-control-toggle-dark" for="themeControlToggle" data-bs-toggle="tooltip" data-bs-placement="left" title="Oscuro"><span class="fas fa-moon fs-0"></span></label>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a id="logout" class="nav-link px-0 fa-icon-wait" href="/pages/auth/login.aspx" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cerrar Sesión" runat="server">
+                  <span class="fas fa-power-off text-danger" data-fa-transform="shrink-7" style="font-size: 33px;"></span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- ===============================================-->
+          <!--    MainContent                                 -->
+          <!-- ===============================================-->
+          <div class="position-fixed" style="z-index: 1090;">
+            <div id="alert1_notifications"></div>
+          
+            <%--<div class="alert alert-warning border-2 fade show my-2" role="alert">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 d-flex align-items-center mb-3">
+                  <div class="bg-warning me-3 icon-item"><span class="fas fa-exclamation-circle text-white fs-3"></span></div>
+                  <h4 class="alert-heading fw-semi-bold mb-0 flex-1">Well done!</h4>
+                  <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                  <hr />
+                  <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                </div>
+              </div>
+            </div>--%>
+          </div>
+          <asp:ContentPlaceHolder ID="body" runat="server"></asp:ContentPlaceHolder>
+          <asp:ContentPlaceHolder ID="message" runat="server"></asp:ContentPlaceHolder>
+          
+          <div id="toast_position" class="position-fixed toast-container p-3">
+            <div id="toast_notifications"></div>
+          </div>
+          <!-- ===============================================-->
+          <!--    Footer                                      -->
+          <!-- ===============================================-->
+          <footer class="footer">
+            <div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
+              <div class="col-12 col-sm-auto text-center">
+                <p class="mb-0 text-600">
+                  Ministerio de Desarrollo Social 
+                  <span class="d-none d-sm-inline-block">| </span>
+                  <br class="d-sm-none" />
+                  2022 &copy; 
+                  <a href="https://www.mides.gob.gt">mides.gob.gt</a>.
+                  Todos los derechos reservados.
+                </p>
+              </div>
+              <div class="col-12 col-sm-auto text-center">
+                <p class="mb-0 text-600">v02.09.2022</p>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===============================================-->
+    <!--    JavaScripts                                 -->
+    <!-- ===============================================-->
+    <script src="/assets/vendors/popper/popper.min.js"></script>
+    <script src="/assets/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="/assets/vendors/anchorjs/anchor.min.js"></script>
+    <script src="/assets/vendors/is/is.min.js"></script>
+    <script src="/assets/vendors/dropzone/dropzone.min.js"></script>
+    <script src="/assets/vendors/choices/choices.min.js"></script>
+    <script src="/assets/vendors/prism/prism.js"></script>
+    <script src="/assets/vendors/echarts/echarts.min.js"></script>
+    <script src="/assets/vendors/chart/chart.min.js"></script>
+    <script src="/assets/vendors/dayjs/dayjs.min.js"></script>
+    <script src="/assets/vendors/fontawesome/all.min.js"></script>
+    <script src="/assets/vendors/lodash/lodash.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="/assets/vendors/list.js/list.min.js"></script>
+    <script src="/assets/js/theme.js"></script>
+
+    <!-- jQuery -->
+    <script src="/assets/jquery/jquery.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="/assets/datatable/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/datatable/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/datatable/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/assets/datatable/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/assets/datatable/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/datatable/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/datatable/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/datatable/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/datatable/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="/assets/sweetalert2/js/sweetalert2.min.js"></script>
+
+    <script type="text/javascript">
+      function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
+
+      var s = getParameterByName('s');
+      var n = getParameterByName('n');
+
+      sessionStorage.setItem('sysEncrypted', s);
+      sessionStorage.setItem('nitEncrypted', n);
+
+      function isExpanded(element) {
+        document.getElementById(element).setAttribute('aria-expanded', 'true')
+      }
+
+      function isShow(element) {
+        document.getElementById(element).setAttribute('class', 'nav collapse show')
+      }
+
+      function isActive(element) {
+        document.getElementById(element).setAttribute('class', 'nav-link active')
+      }
+
+      function openModal(modal) {
+        new bootstrap.Modal($(modal)).show();
+        //var myModal = new bootstrap.Modal(document.getElementById('error-modal'))
+        //myModal.show();
+      }
+
+      function showToast(position, title, subtitle, body, headerStyle, bodyStyle) {
+        const rnd = Math.random().toString().substr(2, 4);
+        document.getElementById('toast_position').setAttribute('class', 'position-fixed toast-container p-3 ' + position);
+
+        var newElement = document.createElement("div");
+        var code =  "<div id=\"liveToast\" class=\"toast fade show mb-2\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">" +
+                    "  <div class=\"toast-header " + headerStyle + "\">" +
+                    "    <strong class=\"me-auto\">" + title + "</strong>" +
+                    "    <small>" + subtitle + "</small>" +
+                    "    <button class=\"btn-close btn-close-white\" type=\"button\" data-bs-dismiss=\"toast\" aria-label=\"Close\"></button>" +
+                    "  </div>" +
+                    "  <div class=\"toast-body " + bodyStyle + "\">" + body + "</div>" +
+                    "</div>"
+          newElement.innerHTML += code;
+        document.getElementById("toast_notifications").appendChild(newElement);
+
+        //const toastLiveExample = document.getElementById('toast_notifications')
+
+        //const toast = new bootstrap.Toast(toastLiveExample)
+
+        //toast.show()
+      }
+
+      function showAlert(title, body, style, icon) {
+        const rnd = Math.random().toString().substr(2, 4);
+        var newElement = document.createElement("div");
+        
+        var code = "<div class=\"alert alert-" + style + " border-2 fade show my-2\" role=\"alert\">" +
+          "  <div class=\"row\">" +
+          "    <div class=\"col-sm-12 col-md-12 col-lg-12 d-flex align-items-center mb-3\">" +
+          "      <div class=\"bg-" + style + " me-3 icon-item\"><span class=\"" + icon + " text-white fs-3\"></span></div>" +
+          "      <h4 class=\"alert-heading fw-semi-bold mb-0 flex-1\">" + title + "</h4>" +
+          "      <button class=\"btn-close\" type=\"button\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>" +
+          "    </div>" +
+          "  </div>" +
+          "  <div class=\"row\">" +
+          "    <div class=\"col-sm-12 col-md-12 col-lg-12\">" + body + "</div>" +
+          "  </div>" +
+          "</div>"
+        newElement.innerHTML += code;
+        document.getElementById("alert1_notifications").appendChild(newElement);
+      }
+    </script>
+
+    <asp:ContentPlaceHolder ID="script" runat="server"></asp:ContentPlaceHolder>
+  </form>
+</body>
+</html>
