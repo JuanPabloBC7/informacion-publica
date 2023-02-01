@@ -1,5 +1,5 @@
 # Información Pública
-[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Visual_Studio_Icon_2022.svg/193px-Visual_Studio_Icon_2022.svg.png" alt="Visual Studio 2022" width="24px" height="24px" /> v2022 vb APS.NET](https://visualstudio.microsoft.com/es/vs/)
+[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Visual_Studio_Icon_2019.svg/2060px-Visual_Studio_Icon_2019.svg.png" alt="Visual Studio 2022" width="25px" height="25px">](https://visualstudio.microsoft.com/es/vs/) [<img src="https://static.vecteezy.com/system/resources/previews/011/260/238/original/html5-css3-js-icon-set-web-development-logo-icon-set-of-html-css-and-javascript-programming-symbol-free-vector.jpg" alt="HTML 5" width="90px" height="25px">](#) [<img src="https://static.cdnlogo.com/logos/c/27/c.svg" alt="C#" width="25px" height="25px">](https://learn.microsoft.com/es-es/dotnet/csharp/) [<img src="https://www.edureka.co/blog/wp-content/uploads/2019/10/logo.png" alt="SQL Server Management" width="25px" height="25px">](https://learn.microsoft.com/en-us/sql/ssms/sql-server-management-studio-ssms?view=sql-server-ver16) 
 
 El sistema de información pública se realiza con el fin de obtener solicitudes por usuarios externos a la institución. Las cuales se realizan al llenar un formulario con información general del usuario previo al acceso de esta aplicación.
 
